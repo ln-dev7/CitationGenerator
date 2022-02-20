@@ -1,5 +1,5 @@
 // Tableau de citations
-let citations = [
+export const citations = [
   ["La vie est un mystère qu'il faut vivre, et non un problème à résoudre.", "Gandhi"],
   ["Le plus grand risque est de ne prendre aucun risque.", "Mark Zuckerberg"],
   ["Méritez votre statut de leader chaque jour.", "Mickael Jordan"],
@@ -20,5 +20,10 @@ let citations = [
   ["Pour gagner votre vie, apprenez à l’école. Pour gagner une fortune, apprenez par vous-même.", "Brian Tracy"],
   ["Les gagnants trouvent des moyens, les perdants des excuses…", "F. D. Roosevelt"],
   ["Vous n’êtes jamais trop vieux pour vous fixer de nouveaux buts, ou rendre vos rêves réalité.", "C.S. Lewis"],
-  ["Un pessimiste voit la difficulté dans chaque opportunité. Un optimiste voit une opportunité dans chaque difficulté.", "Winston Churchill"]
+  ["Un pessimiste voit la difficulté dans chaque opportunité. Un optimiste voit une opportunité dans chaque difficulté.", "Winston Churchill"],
+  ["Le succès est un mauvais professeur. Il pousse les gens intelligents à croire qu'ils sont infaillibles.", "Jules Renard"],
+  ["La plus grande gloire n'est pas de ne jamais tomber, mais de se relever à chaque chute.", "Confucius"],
+  ["Il vaut mieux avoir de l'avenir que du passé.","Victor Cousin,"],
+  ["Si on ne construit rien sur des regrets, par contre on bâtit sur des résolutions.", "Anne Bernard,"],
 ];
+

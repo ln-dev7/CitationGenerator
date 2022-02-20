@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+
 *,
 ::before,
 ::after {
@@ -21,12 +23,43 @@ li {
 
 body {
   background: #5c258d;
-  background: -webkit-linear-gradient(to right, #4389a2, #5c258d);
+  background: -webkit-linear-gradient(to right, #29f3d8, #2c91f0);
   background: linear-gradient(to right, #29f3d8, #2c91f0);
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.date {
+    position: relative;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.3em;
+  font-family: 'Dancing Script', cursive;
+  margin-bottom: 1rem;
+  &::before{
+      content: '';
+      position: absolute;
+      background: #fff;
+      height: 1px;
+      width: 50px;
+      top: 50%;
+      left: -60px;
+  }
+  &::after{
+      content: '';
+      position: absolute;
+      background: #fff;
+      height: 1px;
+      width: 50px;
+      margin-left: 7px;
+      top: 50%;
+  }
 }
 
 .container {
@@ -65,17 +98,31 @@ body {
 }
 
 .footer {
-  text-align: center;
-  position: absolute;
-  bottom: 0;
   background: #fff;
-  width: 100%;
-  padding: 0.2rem 0;
+  text-transform: uppercase;
+  color: #000000;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: .3s;
+  margin-top: 1rem;
+  img {
+    margin-right: 5px;
+  }
   a {
-    color: #1363f8;
-    text-align: center;
-    text-decoration: underline;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
+  &:hover {
+    box-shadow: 2px 2px 5px #3333338a;
   }
 }
 
-
+@media only screen and (max-width: 510px) {
+  .container {
+    margin: 0 0.5rem;
+  }
+}
