@@ -1,53 +1,94 @@
 import { citations } from "./citations.js";
 
-const DERNIERR_CITATION_STR = "dernierreCitation"
-const DERNIERR_JOUR_STR     = "dernierJour"
-const INITIAL_CITATION      = 0
+const DERNIERR_CITATION_STR = "dernierreCitation";
+const DERNIERR_JOUR_STR = "dernierJour";
+const INITIAL_CITATION = 0;
 
-window.onload = ()=>{
-let citation = document.querySelector(".citation");
-let auteur = document.querySelector(".auteur");
-let date = document.querySelector(".date");
+window.onload = () => {
+  let citation = document.querySelector(".citation");
+  let auteur = document.querySelector(".auteur");
+  let date = document.querySelector(".date");
 
-const day = new Date()
-const currentDay = day.toLocaleString().split(",")[INITIAL_CITATION]
+  const day = new Date();
+  const currentDay = day.toLocaleString().split(",")[INITIAL_CITATION];
 
-let dernierreCitation = INITIAL_CITATION
-let dernierJour = ""
+  let dernierreCitation = INITIAL_CITATION;
+  let dernierJour = "";
 
-if(localStorage.getItem(DERNIERR_CITATION_STR) && localStorage.getItem(DERNIERR_JOUR_STR)){
-  dernierreCitation = parseInt(localStorage.getItem(DERNIERR_CITATION_STR))
-  dernierJour = localStorage.getItem(DERNIERR_JOUR_STR)
-  if (dernierJour !== currentDay) {
-    dernierreCitation = dernierreCitation + 1
-    if (dernierreCitation <= citations.length) {
-      localStorage.setItem(DERNIERR_CITATION_STR, dernierreCitation)
-    }else {
-      dernierreCitation = INITIAL_CITATION
-      localStorage.setItem(DERNIERR_CITATION_STR, INITIAL_CITATION)
+  if (
+    localStorage.getItem(DERNIERR_CITATION_STR) &&
+    localStorage.getItem(DERNIERR_JOUR_STR)
+  ) {
+    dernierreCitation = parseInt(localStorage.getItem(DERNIERR_CITATION_STR));
+    dernierJour = localStorage.getItem(DERNIERR_JOUR_STR);
+    if (dernierJour !== currentDay) {
+      dernierreCitation = dernierreCitation + 1;
+      if (dernierreCitation <= citations.length) {
+        localStorage.setItem(DERNIERR_CITATION_STR, dernierreCitation);
+      } else {
+        dernierreCitation = INITIAL_CITATION;
+        localStorage.setItem(DERNIERR_CITATION_STR, INITIAL_CITATION);
+      }
+      localStorage.setItem(DERNIERR_JOUR_STR, currentDay);
     }
-    localStorage.setItem(DERNIERR_JOUR_STR, currentDay)
+  } else {
+    localStorage.setItem(DERNIERR_CITATION_STR, INITIAL_CITATION);
+    localStorage.setItem(DERNIERR_JOUR_STR, currentDay);
   }
-} else {
-  localStorage.setItem(DERNIERR_CITATION_STR, INITIAL_CITATION)
-  localStorage.setItem(DERNIERR_JOUR_STR, currentDay)
-}
 
-let dateValue = new Date();
+  let dateValue = new Date();
 
-citation.textContent = citations[dernierreCitation][0];
-auteur.textContent = citations[dernierreCitation][1];
+  citation.textContent = citations[dernierreCitation][0];
+  auteur.textContent = citations[dernierreCitation][1];
 
-dateValue = new Date();
+  dateValue = new Date();
 
-let dateLocale = dateValue.toLocaleString("fr-FR", {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+  let dateLocale = dateValue.toLocaleString("fr-FR", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-date.innerHTML = dateLocale;
-}
+  date.innerHTML = dateLocale;
+};
 
+// import { citations } from "./citations.js";
 
+// let citation = document.querySelector(".citation");
+// let auteur = document.querySelector(".auteur");
+// let date = document.querySelector(".date");
+
+// let time = 86400000;
+
+// let count = Math.floor(Math.random() * citations.length);
+// let dateValue = new Date();
+
+// let dateLocale = dateValue.toLocaleString("fr-FR", {
+//   weekday: "long",
+//   year: "numeric",
+//   month: "long",
+//   day: "numeric",
+// });
+
+// citation.innerHTML = citations[count][0];
+// auteur.innerHTML = citations[count][1];
+// date.innerHTML = dateLocale;
+
+// setInterval(() => {
+//   count = Math.floor(Math.random() * citations.length);
+
+//   citation.textContent = citations[count][0];
+//   auteur.textContent = citations[count][1];
+
+//   dateValue = new Date();
+
+//   dateLocale = dateValue.toLocaleString("fr-FR", {
+//     weekday: "long",
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+//   });
+
+//   date.innerHTML = dateLocale;
+// }, time);
