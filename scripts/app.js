@@ -1,58 +1,143 @@
 import { citations } from "./citations.js";
-
-const DERNIERR_CITATION_STR = "dernierreCitation";
-const DERNIERR_JOUR_STR = "dernierJour";
-const INITIAL_CITATION = 0;
+const APP_NAME = "Citation Generator"
+const LAST_CITATION_STRING = "dernierreCitation"
+const LAST_DAY_STRING = "dernierJour"
+const HOUR_STRING = "hour"
+const INITIAL_CITATION = 0
+const CITATION_STEP = 1
+const CITATION_INDEX = 0
+const AUTOR_INDEX = 1
+const DATE_INDEX = 0
+const BASE_URL = location.protocol + "//" + location.host + "/"
+const ICON_PATH = `${BASE_URL}img/icons/512.png`
+const DATE_LANG = "fr-FR"
+const DATE_FORMAT = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}
 
 window.onload = () => {
-  let citation = document.querySelector(".citation");
-  let auteur = document.querySelector(".auteur");
-  let date = document.querySelector(".date");
+  const citation = document.querySelector(".citation")
+  const auteur = document.querySelector(".auteur")
+  const date = document.querySelector(".date")
 
-  const day = new Date();
-  const currentDay = day.toLocaleString().split(",")[INITIAL_CITATION];
+  const day = new Date()
+  const currentDay = day.toLocaleString().split(",")[DATE_INDEX]
+  const currentHour = day.toLocaleString().split(",")[1].split(":")[0]
+  const myCitationOfDay = getCitationOfDay(currentDay)
+  const dateLocale = day.toLocaleString(DATE_LANG, { ...DATE_FORMAT })
 
-  let dernierreCitation = INITIAL_CITATION;
-  let dernierJour = "";
+  const title = citations[myCitationOfDay][CITATION_INDEX]
+  const author = citations[myCitationOfDay][AUTOR_INDEX]
 
-  if (
-    localStorage.getItem(DERNIERR_CITATION_STR) &&
-    localStorage.getItem(DERNIERR_JOUR_STR)
-  ) {
-    dernierreCitation = parseInt(localStorage.getItem(DERNIERR_CITATION_STR));
-    dernierJour = localStorage.getItem(DERNIERR_JOUR_STR);
+  showNotificationByHour(title, author, currentHour)
+  checkConnexion()
+
+  citation.textContent = title
+  auteur.textContent = author
+  date.innerHTML = dateLocale
+
+}
+
+/**
+ * @param currentDay int
+ * @return dernierreCitation int
+ */
+const getCitationOfDay = (currentDay) => {
+  let dernierreCitation = INITIAL_CITATION
+  let dernierJour = ""
+
+  if (localStorage.getItem(LAST_CITATION_STRING) && localStorage.getItem(LAST_DAY_STRING)) {
+    dernierreCitation = parseInt(localStorage.getItem(LAST_CITATION_STRING))
+    dernierJour = localStorage.getItem(LAST_DAY_STRING)
     if (dernierJour !== currentDay) {
-      dernierreCitation = dernierreCitation + 1;
+      dernierreCitation = dernierreCitation + CITATION_STEP
       if (dernierreCitation <= citations.length) {
-        localStorage.setItem(DERNIERR_CITATION_STR, dernierreCitation);
+        localStorage.setItem(LAST_CITATION_STRING, dernierreCitation)
       } else {
-        dernierreCitation = INITIAL_CITATION;
-        localStorage.setItem(DERNIERR_CITATION_STR, INITIAL_CITATION);
+        dernierreCitation = INITIAL_CITATION
+        localStorage.setItem(LAST_CITATION_STRING, INITIAL_CITATION)
       }
-      localStorage.setItem(DERNIERR_JOUR_STR, currentDay);
+      localStorage.setItem(LAST_DAY_STRING, currentDay)
     }
   } else {
-    localStorage.setItem(DERNIERR_CITATION_STR, INITIAL_CITATION);
-    localStorage.setItem(DERNIERR_JOUR_STR, currentDay);
+    localStorage.setItem(LAST_CITATION_STRING, INITIAL_CITATION)
+    localStorage.setItem(LAST_DAY_STRING, currentDay)
   }
 
-  let dateValue = new Date();
+  return dernierreCitation
 
-  citation.textContent = citations[dernierreCitation][0];
-  auteur.textContent = citations[dernierreCitation][1];
+}
 
-  dateValue = new Date();
+/**
+ * @param title String
+ * @param msg String
+ * @return show notifcation
+ */
+const showNotification = (title, msg) => {
+  const granted = "granted"
+  const denied = "denied"
+  if (Notification.permission == granted) {
+    const notification = new Notification(title, {
+      body: msg,
+      icon: ICON_PATH
+    })
+    notification.onclick = () => {
+      window.location = BASE_URL
+    }
+  } else if (Notification.permission !== denied) {
+    Notification.requestPermission().then(permission => {
+      console.log(permission)
+    })
+  }
+}
 
-  let dateLocale = dateValue.toLocaleString("fr-FR", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+/**
+ * @param author String
+ * @param content String
+ * @param currentHour String
+ * @return showNotif
+ */
+const showNotificationByHour = (author, content, currentHour) => {
 
-  date.innerHTML = dateLocale;
-};
+  currentHour = parseInt(currentHour)
+  if (localStorage.getItem(HOUR_STRING)) {
+    const storageHour = parseInt(localStorage.getItem(HOUR_STRING))
+    if (storageHour !== currentHour) {
+      localStorage.setItem(HOUR_STRING, currentHour)
+      showNotification(author, content)
+    }
+  } else {
+    localStorage.setItem(HOUR_STRING, currentHour)
+    showNotification(author, content)
+  }
 
+}
+
+const checkConnexion = () => {
+  const verifyIfOffLine = () => {
+    const ifNotOnLine = window.setInterval(() => {
+      if (!navigator.onLine) {
+        showNotification(APP_NAME, "Vous êtes hors connexions, navigation hors connexion activées")
+        clearTimeout(ifNotOnLine)
+        verifyIfOnLine()
+      }
+    }, 500)
+  }
+  const verifyIfOnLine = () => {
+    const ifOnLine = window.setInterval(() => {
+      if (navigator.onLine) {
+        window.location = BASE_URL
+        showNotification(APP_NAME, "Connexion retablie")
+        clearTimeout(ifOnLine)
+        verifyIfOffLine()
+      }
+    }, 500)
+  }
+  verifyIfOffLine()
+}
 // import { citations } from "./citations.js";
 
 // let citation = document.querySelector(".citation");
@@ -92,3 +177,4 @@ window.onload = () => {
 
 //   date.innerHTML = dateLocale;
 // }, time);
+

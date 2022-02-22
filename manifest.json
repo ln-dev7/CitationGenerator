@@ -1,0 +1,12 @@
+{
+    "name": "Citation Generator",
+    "icons": [
+        {
+            "src": "./img/icons/512.png",
+            "type": "image/png",
+            "sizes": "512X512"
+        }
+    ],
+    "start_url": "/?source=pwa",
+    "display" : "standalone"
+}
