@@ -1,4 +1,4 @@
-const PREFIX = "V25"
+const PREFIX = "V39"
 const BASE = location.protocol + "//" + location.host
 const cached_FILES = [
     `${BASE}/style.css`,
@@ -7,12 +7,16 @@ const cached_FILES = [
     `${BASE}/img/github-fill.svg`,
     `${BASE}/img/icons/512.png`,
     `${BASE}/img/icons/copy.png`,
-
 ]
 
-const LAZY_CACHE = [`${BASE}/img/github-fill.svg`, `${BASE}/scripts/app.js`, `${BASE}/scripts/citations.js`]
+const LAZY_CACHE = [`${BASE}/scripts/app.js`, `${BASE}/scripts/citations.js`]
 
 self.addEventListener("fetch", (event) => {
+    event.waitUntil(
+        (async () => {
+            const cache = await caches.open(PREFIX)
+            await cache.addAll(cached_FILES)
+        })())
     if (event.request.mode === "navigate") {
         event.respondWith(
             (async () => {
@@ -63,9 +67,11 @@ self.addEventListener("install", (event) => {
 })
 
 self.addEventListener("activate", (event) => {
+    self.skipWaiting()
     clients.claim()
     event.waitUntil((async () => {
         const keys = await caches.keys()
+        console.log("Keys:" + keys)
         await Promise.all(
             keys.map((key) => {
                 if (!key.includes(PREFIX)) {
@@ -73,13 +79,5 @@ self.addEventListener("activate", (event) => {
                 }
             })
         )
-    }))
-})
-
-self.addEventListener("push", (event) => {
-    event.waitUntil(
-        self.registration.showNotification("Salut", {
-            body: "Voici un message"
-        })
-    )
+    })())
 })

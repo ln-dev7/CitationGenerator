@@ -1,5 +1,4 @@
 import { citations } from "./citations.js";
-
 const APP_NAME = "Citation Generator"
 const LAST_CITATION_STRING = "dernierreCitation"
 const LAST_DAY_STRING = "dernierJour"
@@ -143,7 +142,7 @@ const checkConnexion = () => {
 
 const copyToClipboard = () => {
   const copyContainer = document.querySelector(".copy")
-  if(copyContainer !== null)
+  if (copyContainer !== null)
     copyContainer.addEventListener("click", () => {
       const citation = document.querySelector(".citation").textContent
       const successTxt = "Citation copiée dans votre presse papier"
