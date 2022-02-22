@@ -34,6 +34,7 @@ window.onload = () => {
 
   showNotificationByHour(title, author, currentHour)
   checkConnexion()
+  copyToClipboard()
 
   citation.textContent = title
   auteur.textContent = author
@@ -42,8 +43,8 @@ window.onload = () => {
 }
 
 /**
- * @param currentDay int
- * @return dernierreCitation int
+ * @param {number} currentDay
+ * @return {void}
  */
 const getCitationOfDay = (currentDay) => {
   let dernierreCitation = INITIAL_CITATION
@@ -72,9 +73,9 @@ const getCitationOfDay = (currentDay) => {
 }
 
 /**
- * @param title String
- * @param msg String
- * @return show notifcation
+ * @param {String} title
+ * @param {String} msg
+ * @return {void}
  */
 const showNotification = (title, msg) => {
   const granted = "granted"
@@ -95,10 +96,10 @@ const showNotification = (title, msg) => {
 }
 
 /**
- * @param author String
- * @param content String
- * @param currentHour String
- * @return showNotif
+ * @param {String} author
+ * @param {String} content
+ * @param {String} currentHour
+ * @returns {void}
  */
 const showNotificationByHour = (author, content, currentHour) => {
 
@@ -137,6 +138,42 @@ const checkConnexion = () => {
     }, 500)
   }
   verifyIfOffLine()
+}
+
+const copyToClipboard = () => {
+  const copyContainer = document.querySelector(".copy")
+  if(copyContainer !== null)
+    copyContainer.addEventListener("click", () => {
+      const citation = document.querySelector(".citation").textContent
+      const successTxt = "Citation copiée dans votre presse papier"
+      navigator.clipboard.writeText(citation)
+      showAlert(successTxt)
+      showNotification(successTxt, citation)
+    })
+}
+
+/**
+ * 
+ * @param {String} text 
+ */
+const showAlert = (text) => {
+  const body = document.querySelector("body")
+  const alert = document.createElement("div")
+  const spanIcon = document.createElement("span")
+  const spanTxt = document.createElement("span")
+  const timeToHide = 3000
+  spanIcon.classList.add("icon")
+  spanTxt.classList.add("msg")
+  alert.classList.add("alert")
+  spanTxt.textContent = text
+  alert.appendChild(spanIcon)
+  alert.appendChild(spanTxt)
+  body.appendChild(alert)
+
+  const timer = setTimeout(() => {
+    alert.remove()
+    clearTimeout(timer)
+  }, timeToHide)
 }
 // import { citations } from "./citations.js";
 

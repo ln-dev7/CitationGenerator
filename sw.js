@@ -1,11 +1,12 @@
-const PREFIX = "V20"
+const PREFIX = "V25"
 const BASE = location.protocol + "//" + location.host
 const cached_FILES = [
     `${BASE}/style.css`,
     `${BASE}/offline.html`,
     `${BASE}/favicon.ico`,
     `${BASE}/img/github-fill.svg`,
-    `${BASE}/img/icons/512.png`
+    `${BASE}/img/icons/512.png`,
+    `${BASE}/img/icons/copy.png`,
 
 ]
 

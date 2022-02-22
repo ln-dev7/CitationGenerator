@@ -1,0 +1,6 @@
+.copy:hover {
+  content: "";
+  display: block;
+  width: 500px;
+  height: 500px;
+  background: red !important; }

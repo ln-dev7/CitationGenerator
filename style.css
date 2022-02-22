@@ -20,8 +20,66 @@ li {
   list-style: none;
 }
 
+@-webkit-keyframes swing {
+  15% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  30% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+  50% {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+  65% {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+  80% {
+    -webkit-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes swing {
+  15% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  30% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+  50% {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+  65% {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+  80% {
+    -webkit-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+  }
+}
 body {
   background: #5c258d;
+  background: -webkit-linear-gradient(to right, #29f3d8, #2c91f0);
   background: linear-gradient(to right, #29f3d8, #2c91f0);
   min-height: 100vh;
   display: flex;
@@ -61,6 +119,11 @@ body {
 }
 
 .container {
+  transition: all 0.3s ease;
+  -webkit-animation: swing 1s ease;
+  animation: swing 1s ease;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
   background: #fff;
   max-width: 500px;
   display: flex;
@@ -68,6 +131,9 @@ body {
   justify-content: center;
   flex-direction: column;
   border-radius: 20px 0 20px 0;
+}
+.container:hover {
+  transform: scale(1.1);
 }
 .container .citation {
   font-size: 1.5em;
@@ -123,4 +189,174 @@ body {
   .container {
     margin: 0 0.5rem;
   }
-}/*# sourceMappingURL=style.css.map */
+}
+.copy {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.copy:hover {
+  transition: all 0.3s ease;
+}
+.copy:hover::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: absolute;
+  border-radius: 20px 0 0 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+.copy:hover::before {
+  z-index: 6;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin-right: 5px;
+  content: "";
+  background: url("img/icons/copy.png") no-repeat 0 0;
+  background-size: 50px;
+  background-position: center;
+  cursor: pointer;
+  position: absolute;
+  bottom: 5px;
+}
+
+@media only screen and (max-width: 850px) {
+  .copy {
+    position: sticky !important;
+  }
+  .copy::before {
+    z-index: 6;
+    display: inline-block !important;
+    width: 60px !important;
+    height: 60px !important;
+    margin-right: 5px !important;
+    content: "";
+    background: url("img/icons/copy.png") no-repeat 0 0;
+    background-size: 50px !important;
+    background-position: left !important;
+    position: absolute !important;
+    bottom: 5px !important;
+    left: 7px !important;
+  }
+  .copy:hover::after {
+    content: none !important;
+  }
+}
+.copy {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.copy:hover {
+  transition: all 0.3s ease;
+}
+.copy:hover::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: absolute;
+  border-radius: 20px 0 0 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+.copy:hover::before {
+  z-index: 6;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin-right: 5px;
+  content: "";
+  background: url("img/icons/copy.png") no-repeat 0 0;
+  background-size: 50px;
+  background-position: center;
+  cursor: pointer;
+  position: absolute;
+  bottom: 5px;
+}
+
+@media only screen and (max-width: 850px) {
+  .copy {
+    position: sticky !important;
+  }
+  .copy::before {
+    z-index: 6;
+    display: inline-block !important;
+    width: 60px !important;
+    height: 60px !important;
+    margin-right: 5px !important;
+    content: "";
+    background: url("img/icons/copy.png") no-repeat 0 0;
+    background-size: 50px !important;
+    background-position: left !important;
+    position: absolute !important;
+    bottom: 5px !important;
+    left: 7px !important;
+  }
+  .copy:hover::after {
+    content: none !important;
+  }
+}
+@keyframes load {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.alert {
+  background: #fff;
+  padding: 1rem;
+  color: #000000;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 3px 1px -3px;
+  position: absolute;
+  right: 37px;
+  top: 50px;
+  animation: slideIn 1s ease forwards;
+  overflow: hidden;
+}
+.alert::after {
+  content: "";
+  display: block;
+  height: 5px;
+  background: #2c91f0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  animation: load 3s ease;
+}
+.alert::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: #ddd;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+@media only screen and (max-width: 850px) {
+  .alert {
+    width: 100vw !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
