@@ -1,12 +1,11 @@
-const PREFIX = "V19"
+const PREFIX = "V20"
 const BASE = location.protocol + "//" + location.host
 const cached_FILES = [
     `${BASE}/style.css`,
     `${BASE}/offline.html`,
     `${BASE}/favicon.ico`,
     `${BASE}/img/github-fill.svg`,
-    `${BASE}/scripts/app.js`,
-    `${BASE}/scripts/citations.js`
+    `${BASE}/img/icons/512.png`
 
 ]
 
