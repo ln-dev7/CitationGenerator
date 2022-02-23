@@ -142,7 +142,7 @@ const checkConnexion = () => {
 
 const copyToClipboard = () => {
   const copyContainer = document.querySelector(".copy")
-  if(copyContainer !== null)
+  if (copyContainer !== null)
     copyContainer.addEventListener("click", () => {
       const citation = document.querySelector(".citation").textContent
       const successTxt = "Citation copiée dans votre presse papier"
